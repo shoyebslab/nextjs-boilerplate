@@ -10,7 +10,7 @@ const ROLE_RESTRICTED_ROUTES: Record<string, RoleType[]> = {
   "/dashboard/users/create": [ROLES.SUPER_ADMIN, ROLES.ADMIN],
 };
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const accessToken = request.cookies.get(ACCESS_TOKEN_KEY)?.value;
 
