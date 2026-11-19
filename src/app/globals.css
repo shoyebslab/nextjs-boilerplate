@@ -1,0 +1,173 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /* ========================================================
+     1. FRONTEND / WEBSITE THEME (Default Root)
+     Palette: Clean Medical Emerald / Cyan & Crisp Slate
+     ======================================================== */
+  :root {
+    --background: 180 20% 99%;
+    --foreground: 215 25% 15%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 215 25% 15%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 215 25% 15%;
+
+    /* Emerald Brand Primary */
+    --primary: 168 80% 36%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 174 60% 94%;
+    --secondary-foreground: 172 80% 20%;
+
+    --muted: 210 20% 96%;
+    --muted-foreground: 215 16% 47%;
+
+    --accent: 174 50% 92%;
+    --accent-foreground: 172 80% 20%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 168 80% 36%;
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 200 30% 6%;
+    --foreground: 210 40% 98%;
+
+    --card: 200 25% 9%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 200 25% 9%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 168 70% 45%;
+    --primary-foreground: 168 100% 10%;
+
+    --secondary: 200 25% 15%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 200 20% 14%;
+    --muted-foreground: 215 20% 65%;
+
+    --accent: 200 20% 15%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62% 30%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 200 20% 18%;
+    --input: 200 20% 18%;
+    --ring: 168 70% 45%;
+  }
+
+  /* ========================================================
+     2. DASHBOARD THEME (Scoped via [data-theme="dashboard"])
+     Palette: Enterprise Slate Indigo / Deep Navy
+     ======================================================== */
+  [data-theme="dashboard"] {
+    --background: 210 20% 98%;
+    --foreground: 222 47% 11%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+
+    /* Enterprise Indigo Primary */
+    --primary: 224 76% 48%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 215 25% 92%;
+    --secondary-foreground: 222 47% 11%;
+
+    --muted: 210 20% 93%;
+    --muted-foreground: 215 16% 45%;
+
+    --accent: 224 76% 95%;
+    --accent-foreground: 224 76% 48%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 214 25% 88%;
+    --input: 214 25% 88%;
+    --ring: 224 76% 48%;
+
+    /* Executive Sidebar */
+    --sidebar-background: 222 47% 11%;
+    --sidebar-foreground: 210 40% 98%;
+    --sidebar-primary: 224 76% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 217 33% 18%;
+    --sidebar-accent-foreground: 210 40% 98%;
+    --sidebar-border: 217 33% 20%;
+    --sidebar-ring: 224 76% 48%;
+  }
+
+  .dark [data-theme="dashboard"],
+  [data-theme="dashboard"].dark {
+    --background: 224 71% 4%;
+    --foreground: 213 31% 91%;
+
+    --card: 222 47% 8%;
+    --card-foreground: 213 31% 91%;
+
+    --popover: 222 47% 8%;
+    --popover-foreground: 213 31% 91%;
+
+    --primary: 217 91% 60%;
+    --primary-foreground: 222 47% 11%;
+
+    --secondary: 217 33% 16%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217 33% 14%;
+    --muted-foreground: 215 20% 65%;
+
+    --accent: 217 33% 18%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62% 30%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217 33% 16%;
+    --input: 217 33% 16%;
+    --ring: 217 91% 60%;
+
+    --sidebar-background: 224 71% 3%;
+    --sidebar-foreground: 210 40% 98%;
+    --sidebar-primary: 217 91% 60%;
+    --sidebar-primary-foreground: 222 47% 11%;
+    --sidebar-accent: 217 33% 15%;
+    --sidebar-accent-foreground: 210 40% 98%;
+    --sidebar-border: 217 33% 12%;
+    --sidebar-ring: 217 91% 60%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+.ag-theme-quartz,
+.ag-theme-quartz-dark {
+  --ag-font-family: inherit;
+  --ag-font-size: 13px;
+  --ag-border-radius: 6px;
+}
