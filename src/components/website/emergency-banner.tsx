@@ -44,14 +44,6 @@ export function EmergencyBanner({ topbar }: EmergencyBannerProps) {
             <Phone className="h-4 w-4 text-sky-600" />
             <span>{phoneDisplay}</span>
           </a>
-
-          <a
-            href={`tel:${ambulance}`}
-            className="flex items-center gap-2.5 rounded-xl bg-red-600 text-white px-5 py-3 font-extrabold shadow-lg hover:bg-red-700 transition-all text-sm animate-pulse"
-          >
-            <Siren className="h-4 w-4" />
-            <span>{ambulance}</span>
-          </a>
         </div>
       </div>
     </section>
