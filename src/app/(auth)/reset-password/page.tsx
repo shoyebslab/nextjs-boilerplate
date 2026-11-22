@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { Suspense, useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Lock, CheckCircle2 } from "lucide-react";
@@ -8,8 +8,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { authApi } from "@/features/auth/api/auth.api";
+import { LoadingSpinner } from "@/components/shared/loading-spinner";
 
-export default function ResetPasswordPage() {
+function ResetPasswordForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const token = searchParams.get("token") || "";
@@ -99,8 +100,31 @@ export default function ResetPasswordPage() {
           <Button type="submit" className="w-full" disabled={loading}>
             {loading ? "Updating..." : "Update Password"}
           </Button>
+
+          <div className="text-center pt-2">
+            <Link
+              href="/login"
+              className="text-xs text-muted-foreground hover:text-foreground transition-colors"
+            >
+              Back to Login
+            </Link>
+          </div>
         </form>
       )}
     </div>
+  );
+}
+
+export default function ResetPasswordPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex h-48 w-full items-center justify-center">
+          <LoadingSpinner size={32} />
+        </div>
+      }
+    >
+      <ResetPasswordForm />
+    </Suspense>
   );
 }
