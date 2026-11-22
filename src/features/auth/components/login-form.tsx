@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Lock, Mail, AlertCircle } from "lucide-react";
+import { Lock, Mail, AlertCircle, ShieldCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -43,6 +43,14 @@ export function LoginForm() {
     setErrors((current) => ({ ...current, captcha: "" }));
   };
 
+  const handleFillAdmin = () => {
+    setEmail("admin");
+    setPassword("admin123");
+    setCaptcha(captchaChallenge);
+    setErrors({});
+    setServerError(null);
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setServerError(null);
@@ -69,11 +77,13 @@ export function LoginForm() {
     try {
       await login({ email, username: email, password });
       router.push(redirect);
+      router.refresh();
     } catch (err: unknown) {
       const errorMsg =
         (err as { message?: string }).message ||
         "Failed to sign in. Please check your credentials.";
       setServerError(errorMsg);
+      refreshCaptcha();
     } finally {
       setLoading(false);
     }
@@ -95,15 +105,32 @@ export function LoginForm() {
         </div>
       )}
 
+      {/* Quick Demo Autofill Helper */}
+      <div className="rounded-lg border bg-muted/30 p-2.5 flex items-center justify-between text-xs">
+        <div className="flex items-center gap-1.5 text-muted-foreground">
+          <ShieldCheck className="h-4 w-4 text-primary shrink-0" />
+          <span>Demo Admin: <strong>admin</strong> / <strong>admin123</strong></span>
+        </div>
+        <Button
+          type="button"
+          variant="outline"
+          size="sm"
+          onClick={handleFillAdmin}
+          className="h-7 px-2.5 text-[11px] font-medium"
+        >
+          Auto Fill
+        </Button>
+      </div>
+
       <form onSubmit={handleSubmit} className="space-y-3.5">
         <div className="space-y-1.5">
-          <Label htmlFor="email">Enter your email</Label>
+          <Label htmlFor="email">Email or Username</Label>
           <div className="relative">
             <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
             <Input
               id="email"
               type="text"
-              placeholder="email@example.com"
+              placeholder="admin or email@example.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="pl-9"

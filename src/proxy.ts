@@ -12,7 +12,10 @@ const ROLE_RESTRICTED_ROUTES: Record<string, RoleType[]> = {
 
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
-  const accessToken = request.cookies.get(ACCESS_TOKEN_KEY)?.value;
+  const accessToken =
+    request.cookies.get(ACCESS_TOKEN_KEY)?.value ||
+    request.cookies.get("starline_access_token")?.value ||
+    request.cookies.get("app_access_token")?.value;
 
   const isAuthenticated = Boolean(accessToken);
   const isAuthRoute =

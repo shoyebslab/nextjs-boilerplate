@@ -1,7 +1,7 @@
 export const siteConfig = {
-  name: "Starline Health & Cloud Enterprise",
+  name: "Starline Hospital",
   shortName: "Starline",
-  description: "Next.js 15 + DRF Full Stack Enterprise Website and Clinical Management Dashboard",
+  description: "Website and Clinical Management Dashboard",
   url: process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000",
   apiBaseUrl: process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/api/v1",
   links: {
