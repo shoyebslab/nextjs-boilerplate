@@ -7,8 +7,17 @@ import { Lock, Mail, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Captcha } from "@/components/ui/captcha";
 import { useAuth } from "../hooks/use-auth";
 import { validateLogin } from "../schemas/auth.schema";
+
+function createCaptchaChallenge() {
+  const characters = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+  return Array.from(
+    { length: 6 },
+    () => characters[Math.floor(Math.random() * characters.length)]
+  ).join("");
+}
 
 export function LoginForm() {
   const router = useRouter();
@@ -18,17 +27,40 @@ export function LoginForm() {
   const { login } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [captcha, setCaptcha] = useState("");
+  const [captchaChallenge, setCaptchaChallenge] = useState("");
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [serverError, setServerError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+
+  React.useEffect(() => {
+    setCaptchaChallenge(createCaptchaChallenge());
+  }, []);
+
+  const refreshCaptcha = () => {
+    setCaptcha("");
+    setCaptchaChallenge(createCaptchaChallenge());
+    setErrors((current) => ({ ...current, captcha: "" }));
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setServerError(null);
 
     const validation = validateLogin({ email, password });
-    if (!validation.isValid) {
-      setErrors(validation.errors);
+    const captchaErrors = { ...validation.errors };
+
+    if (!captcha.trim()) {
+      captchaErrors.captcha = "Captcha is required.";
+    } else if (captcha.trim().toUpperCase() !== captchaChallenge) {
+      captchaErrors.captcha = "The captcha is incorrect.";
+    }
+
+    if (Object.keys(captchaErrors).length > 0) {
+      setErrors(captchaErrors);
+      if (captchaErrors.captcha === "The captcha is incorrect.") {
+        refreshCaptcha();
+      }
       return;
     }
     setErrors({});
@@ -47,19 +79,12 @@ export function LoginForm() {
     }
   };
 
-  const handleAutofill = (demoEmail: string) => {
-    setEmail(demoEmail);
-    setPassword("Demo@12345");
-    setErrors({});
-    setServerError(null);
-  };
-
   return (
     <div className="w-full max-w-sm space-y-5">
       <div className="space-y-1 text-center">
-        <h1 className="text-2xl font-bold tracking-tight">Welcome Back</h1>
+        <h1 className="text-2xl font-bold tracking-tight">One step ahead to login</h1>
         <p className="text-xs text-muted-foreground">
-          Enter your DRF account credentials to access your dashboard
+          Enter your account credentials to access your dashboard
         </p>
       </div>
 
@@ -72,13 +97,13 @@ export function LoginForm() {
 
       <form onSubmit={handleSubmit} className="space-y-3.5">
         <div className="space-y-1.5">
-          <Label htmlFor="email">Email or Username</Label>
+          <Label htmlFor="email">Enter your email</Label>
           <div className="relative">
             <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
             <Input
               id="email"
               type="text"
-              placeholder="admin@starline.com"
+              placeholder="email@example.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="pl-9"
@@ -115,46 +140,21 @@ export function LoginForm() {
           )}
         </div>
 
+        <Captcha
+          value={captcha}
+          challenge={captchaChallenge}
+          onChange={(value) => {
+            setCaptcha(value);
+            setErrors((current) => ({ ...current, captcha: "" }));
+          }}
+          onRefresh={refreshCaptcha}
+          error={errors.captcha}
+        />
+
         <Button type="submit" className="w-full mt-2" disabled={loading}>
           {loading ? "Authenticating..." : "Sign In"}
         </Button>
       </form>
-
-      {/* Demo Credentials Helper */}
-      <div className="rounded-lg border bg-muted/40 p-3 space-y-2">
-        <p className="text-[11px] font-semibold text-muted-foreground">
-          Quick Demo Autofill:
-        </p>
-        <div className="flex gap-2">
-          <Button
-            type="button"
-            variant="outline"
-            size="sm"
-            onClick={() => handleAutofill("admin@starline.com")}
-            className="text-[11px] h-7 flex-1"
-          >
-            Admin
-          </Button>
-          <Button
-            type="button"
-            variant="outline"
-            size="sm"
-            onClick={() => handleAutofill("manager@starline.com")}
-            className="text-[11px] h-7 flex-1"
-          >
-            Manager
-          </Button>
-          <Button
-            type="button"
-            variant="outline"
-            size="sm"
-            onClick={() => handleAutofill("user@starline.com")}
-            className="text-[11px] h-7 flex-1"
-          >
-            Staff User
-          </Button>
-        </div>
-      </div>
     </div>
   );
 }
