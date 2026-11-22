@@ -1,13 +1,13 @@
 export const THEME_CONFIG = {
   website: {
-    name: "Medical Emerald",
-    primary: "hsl(168 80% 36%)",
-    primaryDark: "hsl(168 70% 45%)",
+    name: "Starline Hospital Clinical Blue",
+    primary: "hsl(211 82% 28%)",
+    primaryDark: "hsl(199 89% 48%)",
   },
   dashboard: {
-    name: "Enterprise Slate Indigo",
-    primary: "hsl(224 76% 48%)",
-    primaryDark: "hsl(217 91% 60%)",
-    sidebarBackground: "hsl(222 47% 11%)",
+    name: "Clinical Operations Navy & Slate",
+    primary: "hsl(211 82% 32%)",
+    primaryDark: "hsl(201 96% 45%)",
+    sidebarBackground: "hsl(215 50% 12%)",
   },
 } as const;

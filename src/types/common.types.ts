@@ -9,6 +9,7 @@ export interface NavItem {
   roles?: string[];
   permissions?: string[];
   badge?: string;
+  children?: NavItem[];
 }
 
 export interface NavSection {

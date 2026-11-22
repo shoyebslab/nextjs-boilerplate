@@ -3,6 +3,9 @@
 import React, { Suspense, useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 import { Lock, CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -10,34 +13,43 @@ import { Label } from "@/components/ui/label";
 import { authApi } from "@/features/auth/api/auth.api";
 import { LoadingSpinner } from "@/components/shared/loading-spinner";
 
+const resetPasswordSchema = z
+  .object({
+    password: z.string().min(6, "Password must be at least 6 characters"),
+    confirmPassword: z.string().min(1, "Please confirm your password"),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
+  });
+
+type ResetPasswordValues = z.infer<typeof resetPasswordSchema>;
+
 function ResetPasswordForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const token = searchParams.get("token") || "";
 
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [error, setError] = useState<string | null>(null);
+  const [serverError, setServerError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
-  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (password !== confirmPassword) {
-      setError("Passwords do not match.");
-      return;
-    }
-    setError(null);
-    setLoading(true);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<ResetPasswordValues>({
+    resolver: zodResolver(resetPasswordSchema),
+    defaultValues: { password: "", confirmPassword: "" },
+  });
 
+  const onSubmit = async (data: ResetPasswordValues) => {
+    setServerError(null);
     try {
-      await authApi.resetPassword({ token, password });
+      await authApi.resetPassword({ token, password: data.password });
       setSuccess(true);
       setTimeout(() => router.push("/login"), 2500);
     } catch (err: unknown) {
-      setError((err as { message?: string }).message || "Invalid or expired reset token.");
-    } finally {
-      setLoading(false);
+      setServerError((err as { message?: string }).message || "Invalid or expired reset token.");
     }
   };
 
@@ -58,10 +70,10 @@ function ResetPasswordForm() {
           </p>
         </div>
       ) : (
-        <form onSubmit={handleSubmit} className="space-y-3.5">
-          {error && (
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-3.5" noValidate>
+          {serverError && (
             <div className="rounded-md border border-destructive/20 bg-destructive/10 p-2.5 text-xs text-destructive">
-              {error}
+              {serverError}
             </div>
           )}
 
@@ -73,40 +85,44 @@ function ResetPasswordForm() {
                 id="password"
                 type="password"
                 placeholder="••••••••"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                {...register("password")}
                 className="pl-9"
-                required
+                aria-invalid={errors.password ? "true" : "false"}
               />
             </div>
+            {errors.password && (
+              <p className="text-[11px] text-destructive">{errors.password.message}</p>
+            )}
           </div>
 
           <div className="space-y-1.5">
-            <Label htmlFor="c-password">Confirm Password</Label>
+            <Label htmlFor="confirmPassword">Confirm Password</Label>
             <div className="relative">
               <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
               <Input
-                id="c-password"
+                id="confirmPassword"
                 type="password"
                 placeholder="••••••••"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
+                {...register("confirmPassword")}
                 className="pl-9"
-                required
+                aria-invalid={errors.confirmPassword ? "true" : "false"}
               />
             </div>
+            {errors.confirmPassword && (
+              <p className="text-[11px] text-destructive">{errors.confirmPassword.message}</p>
+            )}
           </div>
 
-          <Button type="submit" className="w-full" disabled={loading}>
-            {loading ? "Updating..." : "Update Password"}
+          <Button type="submit" className="w-full" disabled={isSubmitting}>
+            {isSubmitting ? "Updating Password..." : "Reset Password"}
           </Button>
 
-          <div className="text-center pt-2">
+          <div className="text-center">
             <Link
               href="/login"
-              className="text-xs text-muted-foreground hover:text-foreground transition-colors"
+              className="text-xs text-muted-foreground hover:text-foreground"
             >
-              Back to Login
+              Cancel and return to sign in
             </Link>
           </div>
         </form>
@@ -117,13 +133,7 @@ function ResetPasswordForm() {
 
 export default function ResetPasswordPage() {
   return (
-    <Suspense
-      fallback={
-        <div className="flex h-48 w-full items-center justify-center">
-          <LoadingSpinner size={32} />
-        </div>
-      }
-    >
+    <Suspense fallback={<LoadingSpinner />}>
       <ResetPasswordForm />
     </Suspense>
   );

@@ -3,14 +3,12 @@ import type { Config } from "tailwindcss";
 const config: Config = {
   darkMode: ["class"],
   content: [
-    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
     container: {
       center: true,
-      padding: "2rem",
+      padding: "1.5rem",
       screens: {
         "2xl": "1400px",
       },
@@ -49,6 +47,13 @@ const config: Config = {
         card: {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
+        },
+        hospital: {
+          navy: "hsl(var(--hospital-navy, 215 73% 16%))",
+          blue: "hsl(var(--hospital-blue, 211 82% 24%))",
+          sky: "hsl(var(--hospital-sky, 199 89% 48%))",
+          light: "hsl(var(--hospital-light, 204 100% 97%))",
+          accent: "hsl(var(--hospital-accent, 199 95% 74%))",
         },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",

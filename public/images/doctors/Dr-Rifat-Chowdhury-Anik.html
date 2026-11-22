@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1065, initial-scale=1.0">
+  <title>স্টার লাইন স্পেশালাইজড হাসপাতাল</title>
+
+<style>
+/* -----------------------------------------
+   GLOBAL RESET
+------------------------------------------ */
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+/* Bangla Font */
+@font-face{
+  font-family:'SolaimanLipi';
+  src:url('SolaimanLipi.ttf') format('truetype');
+}
+
+body{
+  font-family:'SolaimanLipi', Arial, sans-serif;
+  background:#ffffff;   /* WHITE PAGE */
+  color:white;
+  line-height:1.35;
+  overflow-x:hidden;
+}
+
+/* -----------------------------------------
+   MAIN CONTAINER (Poster Layout)
+------------------------------------------ */
+/*
+.container{
+  width:1065px;
+  height:1600px;
+  margin:0 auto;
+  background:#26469D;
+  position:relative;
+  padding:20px 30px;
+  overflow:hidden;
+}
+*/
+.container{
+  width:1065px;
+  min-height:1600px;   /* FIXED */
+  margin:0 auto;
+  background:#26469D;
+  position:relative;
+  padding:20px 30px;
+  overflow:hidden;
+}
+
+/* -----------------------------------------
+   HEADER
+------------------------------------------ */
+.header{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+}
+
+.logo-section{
+  display:flex;
+  align-items:center;
+  /*gap:1px;*/
+}
+
+.star-icon img{
+  width:100px;
+}
+
+.hospital-name h1{
+  font-size:38px;
+  font-weight:bold;
+  color:white;
+  line-height:1.1;
+}
+
+.subtitle{
+  font-size:28px;
+  font-weight:bold;
+  font-family:'Times New Roman';
+  color:#4ecdc4;
+}
+
+.tagline{
+  font-size:18px;
+  color:#b8d4f0;
+  text-align:right;
+}
+
+.hotline{
+  padding:12px 8px;
+  background:#4ecdc4;
+  color:white;
+  font-size:24px;
+  border-radius:10px;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+
+  margin-right:60px;  
+}
+
+/* -----------------------------------------
+   SPECIALIST TITLE BANNER
+------------------------------------------ */
+.specialties-banner{
+  margin-top:25px;
+  background:#4ecdc4;
+  padding:12px;
+  border-radius:10px;
+  text-align:center;
+
+  width:55%;         /* Smaller width */
+  /*margin-left:0; */    /* Align left */
+  margin-left:25px;
+}
+
+.specialties-banner p{
+  font-size:22px;
+  font-weight:bold;
+  color:white;
+}
+
+/* -----------------------------------------
+   DOCTOR SECTION
+------------------------------------------ */
+.doctor-info{
+  position:relative;
+  margin-top:20px;
+  min-height:350px;
+  z-index:20;
+}
+
+/* Doctor Text (Left Side) */
+.doctor-details{
+  width:600px;
+  text-align:right;
+  line-height:1.1;
+}
+
+.doctor-details h1{
+  font-size:58px;
+  margin-right:20px;
+  font-weight:bold;
+  margin-bottom:8px;
+}
+
+.doctor-details h2{
+  font-size:30px;
+  font-weight:bold;
+  color:#4ecdc4;
+  margin-bottom:8px;
+}
+
+.qualifications p{
+  font-size:26px;
+  margin-right:20px;
+  margin-bottom:4px;
+  color:#e8f4f8;
+}
+
+.consultant, .hospital-name-doctor{
+  font-weight:bold;
+  color:#4ecdc4;
+}
+
+/* DOCTOR IMAGE (A1 — Poster Style) */
+.doctor-image{
+  position:absolute;
+  right:-10px;
+  height:1070px;
+  background:#EEF2F1;
+  border-radius:15px;
+  top:383px;
+  transform:translateY(-50%);
+  z-index:15;
+}
+
+.doctor-image img{
+  width:400px;   /* Perfect size for poster */
+  height:auto;
+}
+
+/* -----------------------------------------
+   APPOINTMENT TIME BOX
+------------------------------------------ */
+
+.appointment-time{
+  background:#4ecdc4;
+  width: 250px;              
+  border-radius: 12px;      
+  overflow: hidden;
+  box-shadow: 3px 4px 8px rgba(0,0,0,0.12);
+  font-family:"Noto Sans Bengali","SolaimanLipi",Arial,sans-serif;
+
+  /* POSITION TWEAKS */
+  position: relative;
+  top: -10px;     /* Move UP */
+  left: -55px;    /* Move LEFT */
+
+  margin: 5px auto;
+  z-index:40;
+}
+
+/* HEADER */
+.card-header {
+    background: linear-gradient(135deg, #ff3b3b 0%, #b30000 100%);
+    color: white;
+    padding: 2px 10px;        
+    text-align: center;
+    font-size: 18px;          
+    font-weight: 700;
+    border-bottom: 2px solid #8a0000;
+}
+
+/* BODY */
+.card-body {
+    background: white;
+    color: #1a1a1e;
+    padding: 2px 10px;       
+    text-align: center;
+    font-size: 20px;          
+    font-weight: 600;
+    line-height: 1.3;         
+    min-height: auto;         
+}
+
+/* FOOTER */
+.card-footer {
+    background: linear-gradient(135deg, #ff3b3b 0%, #b30000 100%);
+    color: white;
+    padding: 2px 2px;       
+    text-align: center;
+    font-size: 18px;          
+    font-weight: 500;
+    border-top: 2px solid #157a8a;
+}
+
+/* -----------------------------------------
+   BUILDING IMAGE (Bottom Left)
+------------------------------------------ */
+.building-image{
+  position:absolute;
+  left:10px;
+  bottom:420px;
+  z-index:5;
+}
+
+.building-image img{
+  height:640px;
+  border-radius:12px;
+}
+
+/* -----------------------------------------
+   SERVICES BOX (Right Side Mid-Page)
+------------------------------------------ */
+.services-section{
+  /*background:#EEF2F1;*/
+  background: transparent;
+  color:#000;
+  padding:10px 20px;
+  width:48%;
+  border-radius:10px;
+
+  position:absolute;
+  right:97px;
+  top:740px;
+  z-index:25;
+}
+
+
+
+/* Title */
+.services-section h3{
+  font-size:26px;
+  font-weight:bold;
+  color:#26469D;
+  margin-bottom:10px;
+}
+
+/* Multi-column layout */
+.services-list{
+  column-count:2;          /* Creates 2 columns */
+  column-gap:25px;         /* Space between columns */
+  list-style:none;
+  padding:0;
+  margin:0;
+}
+
+/* List items */
+.services-list li{
+  font-size:18px;
+  margin-bottom:10px;
+  padding-left:20px;
+  position:relative;
+  break-inside:avoid;      /* Don't split items between columns */
+}
+
+/* Bullets */
+.services-list li::before{
+  content:"●";
+  color:#4ecdc4;
+  position:absolute;
+  left:0;
+}
+
+
+/* -----------------------------------------
+   FOOTER
+------------------------------------------ */
+
+.footer{
+  position:absolute;
+  bottom:5px;        /* Move slightly up */
+  left:0;
+  width:100%;
+  padding:15px 30px;
+  display:flex;
+  justify-content:space-between;
+  background:rgba(0,0,0,0.25);
+  border-radius:15px 15px 0 0;
+}
+
+.address p{
+  font-size:24px;
+  color:#e8f4f8;
+}
+
+.appointment-text{
+  font-size:22px;
+  font-weight:bold;
+  color:#4ecdc4;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+  <!-- HEADER -->
+  <header class="header">
+
+    <div class="logo-section">
+      <div class="star-icon">
+        <img src="slsh.png">
+      </div>
+
+      <div class="hospital-name">
+        <p class="tagline">আধুনিক প্রযুক্তি ও বিশেষজ্ঞ চিকিৎসকের সমন্বয়</p>
+        <h1>স্টার লাইন স্পেশালাইজড হাসপাতাল</h1>
+        <p class="subtitle">STAR LINE SPECIALIZED HOSPITAL</p>
+      </div>
+    </div>
+
+    <div class="hotline">
+      ☎ +88 09611 177 177
+    </div>
+
+  </header>
+
+  <!-- SPECIALTIES -->
+  <div class="specialties-banner">
+    <p>চর্ম, যৌন, এলার্জি, কুষ্ঠ রোগ বিশেষজ্ঞ ও ডার্মাটোসার্জন </p>
+  </div>
+
+  <!-- DOCTOR SECTION -->
+  <section class="doctor-info">
+
+    <div class="doctor-details">
+      <h1>ডাঃ রিফাত চৌধুরী অনিক</h1>
+
+      <div class="qualifications">
+        <p>এমবিবিএস, (ডি ইউ)</p>
+        <p>ডিডিভি (বাংলাদেশ মেডিকেল বিশ্ববিদ্যালয়/পিজি হাসপাতাল)</p>
+        <p>এমএসিপি (ইউ এস এ)</p>
+        <p>স্পেশালী ট্রেইনড ইন ডার্মাটোসার্জারী</p>
+        <p>সহকারী অধ্যাপক, চর্ম ও যৌন রোগ বিভাগ</p>
+        <p>সেন্ট্রাল মেডিকেল কলেজ ও হাসপাতাল, কুমিল্লা।</p>
+        <p class="consultant">কনসালটেন্ট</p>
+        <p class="hospital-name-doctor">স্টার লাইন স্পেশালাইজড হাসপাতাল</p>
+      </div>
+
+    </div>
+
+    <!-- DOCTOR IMAGE (A1 POSITION) -->
+    <div class="doctor-image">
+      <img src="Dr-Rifat-Chowdhury-Anik.jpg">
+    </div>
+
+  </section>
+
+  <!-- APPOINTMENT TIME -->
+  <div class="appointment-time">
+    <div class="card-header">
+        রোগী দেখার সময়ঃ
+    </div>
+
+    <div class="card-body">
+        প্রতি সোম ও বৃহস্পতিবার<br>
+        বিকাল ৩টা থেকে রাত ৮টা
+    </div>
+
+    <div class="card-footer">
+        চেম্বার - স্টার লাইন স্পেশালাইজড হাসপাতাল
+    </div>
+  </div>
+
+  <!-- HOSPITAL BUILDING -->
+  <div class="building-image">
+    <img src="Star-Line-Specialized-Hospital.jpg">
+  </div>
+
+  <!-- SERVICES SECTION -->
+  <section class="services-section">
+    <h3>চিকিৎসা সমূহ :-</h3>
+
+    <div class="services-grid">
+
+      <div class="services-list-1">
+        <ul>
+        <li>দাদ, সোরিয়াসিস, একজিমা, এ্যালার্জি, ব্রণ</li>
+		<li>কুষ্ঠ রোগ, ফেঙ্গাই রোগ, চামড়ার বথা (Skin T.B)</li>
+		<li>শেষ পিচ্ছা ও চামড়ার ফেলসাল জাতীয় রোগ</li>
+		<li>মাথার খুশকি, চুল পড়া ও টাক হয়ে যাওয়া</li>
+		<li>শরীরের অন্যান্য জায়গায় চুল না উঠা ও চুল পড়া</li>
+		<li>শরীরের গোপন ও দৃশ্য উভয়</li>
+		<li>নখ ভেঙ্গে যাওয়া ও নখের অন্যান্য রোগ</li>
+		<li>চামড়ার বিভিন্ন কর্মে মূলের শারীরিক কর্ম যাওয়া</li>
+		<li>অঙ্গ কর্মে চামড়ার ব্যাধিকতা (Aging) দেশা যাওয়া</li>
+		<li>আঁচিল, Verruca, Corn, Callus সহ অন্যান্য চামড়ার</li>
+		<li>টিউমার জাতীয় রোগ</li>
+		<li>যৌন কার্যক্ষমতা হ্রাস, পুরুষ ও মহিলাদের যৌন সংক্রান্ত রোগ</li>
+		<li>অগ্নিদগ্ধ, ব্যাধিকতা, মহিলাদের ত্বক-সম্পন্ন ইত্যাদি রোগ সমূহ</li>
+		<li>ঘন ঘন/অতিরিক্ত ঘর্ম দেয়, প্রস্রাবের পথের জ্বালা-পোড়া, অতিরিক্ত</li>
+		<li>কোষ্ঠ-কোষ্ঠী প্রস্রাবের রোগ ও সাদা ধাতু রোগের যাওয়া</li>
+		<li>ডায়াবেটোলজী (ইনসুলিনসহ কেমিক্যাল কর্মী কর্মা হয়</li>
+		<li>ঘন ব্যাধিকর্মী কর্মা হয়</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="address">
+      <p>ফেনী-নোয়াখালী সড়ক, (আনসার ক্যাম্প সংলগ্ন), মহিপাল, ফেনী।</p>
+    </div>
+
+    <div class="appointment-text">
+      পরম মমতায় স্বাস্থ্য সেবা
+    </div>
+  </footer>
+
+</div>
+
+</body>
+</html>

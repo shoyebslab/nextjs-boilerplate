@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -10,6 +10,14 @@ import {
   Shield,
   Key,
   Settings,
+  Sliders,
+  Menu,
+  Images,
+  Building2,
+  Stethoscope,
+  Package,
+  ChevronDown,
+  ChevronRight,
   Activity,
   LucideIcon,
 } from "lucide-react";
@@ -17,6 +25,7 @@ import { DASHBOARD_NAV_SECTIONS } from "@/config/navigation.config";
 import { useAuth } from "@/features/auth/hooks/use-auth";
 import { useUiStore } from "@/stores/ui.store";
 import { cn } from "@/lib/utils";
+import { NavItem } from "@/types/common.types";
 
 const ICONS: Record<string, LucideIcon> = {
   LayoutDashboard,
@@ -25,12 +34,31 @@ const ICONS: Record<string, LucideIcon> = {
   Shield,
   Key,
   Settings,
+  Sliders,
+  Menu,
+  Images,
+  Building2,
+  Stethoscope,
+  Activity,
+  Package,
 };
 
 export function DashboardSidebar({ className }: { className?: string }) {
   const pathname = usePathname();
   const { user, checkAccess } = useAuth();
   const { sidebarOpen } = useUiStore();
+  const [expandedKeys, setExpandedKeys] = useState<Record<string, boolean>>({
+    "/dashboard/settings": true,
+  });
+
+  const toggleExpand = (href: string, e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setExpandedKeys((prev) => ({
+      ...prev,
+      [href]: !prev[href],
+    }));
+  };
 
   return (
     <aside
@@ -76,27 +104,88 @@ export function DashboardSidebar({ className }: { className?: string }) {
               <nav className="space-y-1 pt-1">
                 {visibleItems.map((item) => {
                   const Icon = item.icon ? ICONS[item.icon] || LayoutDashboard : LayoutDashboard;
-                  const isActive =
+                  const hasChildren = Boolean(item.children && item.children.length > 0);
+                  const isParentActive =
                     item.href === "/dashboard"
                       ? pathname === "/dashboard"
                       : pathname.startsWith(item.href);
+                  const isExpanded =
+                    expandedKeys[item.href] ?? (isParentActive || false);
+
+                  // Filter visible children based on permissions
+                  const visibleChildren = item.children
+                    ? item.children.filter((child) =>
+                        checkAccess({
+                          roles: child.roles as any,
+                          permissions: child.permissions as any,
+                        })
+                      )
+                    : [];
 
                   return (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      title={!sidebarOpen ? item.title : undefined}
-                      className={cn(
-                        "flex items-center gap-3 rounded-md px-3 py-2 text-xs font-medium transition-colors",
-                        isActive
-                          ? "bg-sidebar-primary text-sidebar-primary-foreground font-semibold shadow-sm"
-                          : "text-sidebar-foreground/80 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
-                        !sidebarOpen && "justify-center px-0"
+                    <div key={item.href} className="space-y-1">
+                      <div className="flex items-center">
+                        <Link
+                          href={item.href}
+                          title={!sidebarOpen ? item.title : undefined}
+                          className={cn(
+                            "flex flex-1 items-center gap-3 rounded-md px-3 py-2 text-xs font-medium transition-colors",
+                            isParentActive && !hasChildren
+                              ? "bg-sidebar-primary text-sidebar-primary-foreground font-semibold shadow-sm"
+                              : isParentActive
+                              ? "text-sidebar-primary-foreground font-semibold"
+                              : "text-sidebar-foreground/80 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
+                            !sidebarOpen && "justify-center px-0"
+                          )}
+                        >
+                          <Icon className="h-4 w-4 shrink-0" />
+                          {sidebarOpen && <span className="flex-1">{item.title}</span>}
+                        </Link>
+
+                        {hasChildren && sidebarOpen && (
+                          <button
+                            type="button"
+                            onClick={(e) => toggleExpand(item.href, e)}
+                            className="p-1.5 rounded-md text-sidebar-foreground/60 hover:text-sidebar-foreground hover:bg-sidebar-accent transition-colors"
+                            aria-label={`Toggle ${item.title} submenu`}
+                          >
+                            {isExpanded ? (
+                              <ChevronDown className="h-3.5 w-3.5" />
+                            ) : (
+                              <ChevronRight className="h-3.5 w-3.5" />
+                            )}
+                          </button>
+                        )}
+                      </div>
+
+                      {/* Sub-menu items (Topbar, Navbar, Slider) */}
+                      {hasChildren && sidebarOpen && isExpanded && (
+                        <div className="ml-5 pl-3 border-l border-sidebar-border space-y-1 pt-0.5">
+                          {visibleChildren.map((child: NavItem) => {
+                            const ChildIcon = child.icon
+                              ? ICONS[child.icon] || LayoutDashboard
+                              : LayoutDashboard;
+                            const isChildActive = pathname === child.href;
+
+                            return (
+                              <Link
+                                key={child.href}
+                                href={child.href}
+                                className={cn(
+                                  "flex items-center gap-2.5 rounded-md px-2.5 py-1.5 text-xs font-medium transition-colors",
+                                  isChildActive
+                                    ? "bg-sidebar-primary text-sidebar-primary-foreground font-semibold shadow-sm"
+                                    : "text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+                                )}
+                              >
+                                <ChildIcon className="h-3.5 w-3.5 shrink-0" />
+                                <span>{child.title}</span>
+                              </Link>
+                            );
+                          })}
+                        </div>
                       )}
-                    >
-                      <Icon className="h-4 w-4 shrink-0" />
-                      {sidebarOpen && <span>{item.title}</span>}
-                    </Link>
+                    </div>
                   );
                 })}
               </nav>
