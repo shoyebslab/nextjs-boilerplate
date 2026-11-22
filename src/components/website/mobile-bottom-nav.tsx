@@ -17,7 +17,6 @@ export function MobileBottomNav({ topbar: propTopbar }: MobileBottomNavProps) {
 
   const topbar = propTopbar || hookTopbar;
   const hotline = topbar?.hotline || "+8809611177177";
-  const ambulance = topbar?.ambulance || "01844-477701";
 
   return (
     <nav
@@ -46,10 +45,9 @@ export function MobileBottomNav({ topbar: propTopbar }: MobileBottomNavProps) {
         {/* Book Appointment (Centered Elevated CTA) */}
         <Link
           href="/contact"
-          className="flex flex-col items-center justify-center -mt-4 bg-primary text-primary-foreground px-3.5 py-2 rounded-full shadow-lg hover:scale-105 transition-transform"
-        >
-          <CalendarCheck className="h-5 w-5" />
-          <span className="text-[10px] font-extrabold tracking-tight mt-0.5">{t("সিরিয়াল", "Book")}</span>
+          className="flex flex-col items-center justify-center p-1 text-primary hover:text-primary/80 transition-colors">
+          <CalendarCheck className="h-5 w-5 mb-0.5" />
+          <span className="text-[10px] font-semibold">{t("সিরিয়াল", "Book")}</span>
         </Link>
 
         {/* Diagnostic Report */}
@@ -61,15 +59,6 @@ export function MobileBottomNav({ topbar: propTopbar }: MobileBottomNavProps) {
         >
           <FileText className="h-5 w-5 mb-0.5" />
           <span className="text-[10px] font-semibold">{t("রিপোর্ট", "Report")}</span>
-        </a>
-
-        {/* Ambulance */}
-        <a
-          href={`tel:${ambulance}`}
-          className="flex flex-col items-center justify-center p-1 text-amber-500 hover:text-amber-600 transition-colors"
-        >
-          <Siren className="h-5 w-5 mb-0.5" />
-          <span className="text-[10px] font-semibold">{t("অ্যাম্বুলেন্স", "Ambulance")}</span>
         </a>
       </div>
     </nav>

@@ -2,7 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
-import { Mail, Phone, Lock, CalendarCheck, Siren } from "lucide-react";
+import { Mail, Phone, Lock, CalendarCheck } from "lucide-react";
 import { useLanguageStore } from "@/stores/language.store";
 import { TopbarData } from "@/features/settings/api/settings.api";
 import { cn } from "@/lib/utils";
@@ -16,8 +16,7 @@ export function Topbar({ data, className }: TopbarProps) {
   const { locale, setLocale, t } = useLanguageStore();
 
   const hotline = data?.hotline || "+8809611177177";
-  const phoneDisplay = data?.phone_display || "09611-177177";
-  const ambulance = data?.ambulance || "01844-477701";
+  const phoneDisplay = data?.phone_display || "+8809611177177";
   const email = data?.email || "info@starlinehospital.com.bd";
 
   return (
@@ -37,19 +36,6 @@ export function Topbar({ data, className }: TopbarProps) {
             <Mail className="h-3.5 w-3.5 text-sky-400" />
             <span className="hidden sm:inline">{email}</span>
           </a>
-
-          <span className="hidden md:inline h-3.5 w-[1px] bg-white/20" />
-
-          <div className="inline-flex items-center gap-1.5 text-slate-300">
-            <Siren className="h-3.5 w-3.5 text-red-400 animate-pulse" />
-            <span className="text-white/70 hidden sm:inline">{t("অ্যাম্বুলেন্স:", "Ambulance:")}</span>
-            <a
-              href={`tel:${ambulance}`}
-              className="text-white font-semibold hover:text-sky-300 transition-colors"
-            >
-              {ambulance}
-            </a>
-          </div>
         </div>
 
         {/* Right Actions & Hotline */}

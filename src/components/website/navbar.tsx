@@ -59,17 +59,6 @@ export function Navbar({ items = [], className }: NavbarProps) {
           })}
         </div>
 
-        {/* Right CTA & Controls */}
-        <div className="hidden md:flex items-center gap-2.5">
-          <ThemeToggle />
-          <Button asChild size="sm" className="gap-1.5 shadow-sm font-bold">
-            <Link href="/contact">
-              <CalendarCheck className="h-4 w-4" />
-              <span>{t("অ্যাপয়েন্টমেন্ট নিন", "Book Appointment")}</span>
-            </Link>
-          </Button>
-        </div>
-
         {/* Mobile Hamburger Toggle */}
         <div className="flex items-center gap-2 xl:hidden">
           <ThemeToggle />

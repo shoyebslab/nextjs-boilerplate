@@ -14,6 +14,29 @@ const config: Config = {
       },
     },
     extend: {
+      fontFamily: {
+        sans: [
+          "'SolaimanLipi'",
+          "'Noto Sans Bengali'",
+          "var(--font-roboto-condensed)",
+          "'Roboto Condensed'",
+          "Arial",
+          "sans-serif",
+        ],
+        condensed: [
+          "var(--font-roboto-condensed)",
+          "'Roboto Condensed'",
+          "'SolaimanLipi'",
+          "'Noto Sans Bengali'",
+          "sans-serif",
+        ],
+        bangla: [
+          "'SolaimanLipi'",
+          "'Noto Sans Bengali'",
+          "Arial",
+          "sans-serif",
+        ],
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

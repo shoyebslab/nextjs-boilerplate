@@ -62,7 +62,7 @@ export default function ContactPage() {
             <CardContent className="space-y-3 text-xs text-muted-foreground">
               <p className="flex items-center gap-2">
                 <Phone className="h-4 w-4 text-primary" />
-                <span className="font-semibold text-foreground">Hotline: 09611-177177</span>
+                <span className="font-semibold text-foreground">Hotline: +8809611177177</span>
               </p>
               <p className="flex items-center gap-2">
                 <Phone className="h-4 w-4 text-red-600" />

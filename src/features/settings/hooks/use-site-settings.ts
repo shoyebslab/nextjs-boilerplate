@@ -17,7 +17,7 @@ import {
 
 export const DEFAULT_TOPBAR: TopbarData = {
   hotline: "+8809611177177",
-  phone_display: "09611-177177",
+  phone_display: "+8809611177177",
   ambulance: "01844-477701",
   email: "info@starlinehospital.com.bd",
   address_bn: "মহিপাল, ঢাকা-চট্টগ্রাম মহাসড়ক সংলগ্ন, ফেনী",

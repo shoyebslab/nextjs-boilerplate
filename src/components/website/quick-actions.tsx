@@ -33,7 +33,7 @@ export function QuickActions() {
   ];
 
   return (
-    <section className="relative z-20 -mt-6 sm:-mt-10 max-w-6xl mx-auto px-4">
+    <section className="relative z-20 mt-2 sm:mt-3 max-w-6xl mx-auto px-4">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {cards.map((c, i) => {
           const Icon = c.icon;

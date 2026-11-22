@@ -17,6 +17,8 @@ export const useLanguageStore = create<LanguageState>((set, get) => ({
     if (typeof window !== "undefined") {
       try {
         localStorage.setItem("starline_locale", locale);
+        document.documentElement.lang = locale;
+        document.documentElement.setAttribute("data-lang", locale);
       } catch {}
     }
     set({ locale });

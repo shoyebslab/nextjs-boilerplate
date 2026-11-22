@@ -98,7 +98,7 @@ export default function SettingsHubPage() {
               <div className="flex items-center justify-between pt-1 border-t">
                 <span>Emergency Hotline:</span>
                 <span className="font-semibold text-foreground font-mono">
-                  {data?.topbar.phone_display || "09611-177177"}
+                  {data?.topbar.phone_display || "+8809611177177"}
                 </span>
               </div>
               <div className="flex items-center justify-between">

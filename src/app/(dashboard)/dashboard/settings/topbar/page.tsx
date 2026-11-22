@@ -226,7 +226,7 @@ export default function TopbarSettingsPage() {
               </Label>
               <Input
                 id="phone_display"
-                placeholder="09611-177177"
+                placeholder="+8809611177177"
                 {...register("phone_display")}
                 aria-invalid={errors.phone_display ? "true" : "false"}
               />

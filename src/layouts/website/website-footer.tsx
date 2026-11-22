@@ -12,7 +12,7 @@ export function WebsiteFooter() {
   const { topbar } = useSiteSettings();
 
   const hotline = topbar?.hotline || "+8809611177177";
-  const phoneDisplay = topbar?.phone_display || "09611-177177";
+  const phoneDisplay = topbar?.phone_display || "+8809611177177";
   const ambulance = topbar?.ambulance || "01844-477701";
   const email = topbar?.email || "info@starlinehospital.com.bd";
   const address =

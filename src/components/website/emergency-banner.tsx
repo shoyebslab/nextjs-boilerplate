@@ -13,7 +13,7 @@ export function EmergencyBanner({ topbar }: EmergencyBannerProps) {
   const { t } = useLanguageStore();
 
   const hotline = topbar?.hotline || "+8809611177177";
-  const phoneDisplay = topbar?.phone_display || "09611-177177";
+  const phoneDisplay = topbar?.phone_display || "+8809611177177";
   const ambulance = topbar?.ambulance || "01844-477701";
 
   return (

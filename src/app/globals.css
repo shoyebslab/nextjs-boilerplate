@@ -1,3 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700;800&display=swap');
+
+@font-face {
+  font-family: 'SolaimanLipi';
+  src: url('/fonts/SolaimanLipi.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SolaimanLipi';
+  src: url('/fonts/SolaimanLipi-Bold.ttf') format('truetype'),
+       url('/fonts/SolaimanLipi.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -173,8 +192,26 @@
   * {
     @apply border-border;
   }
+  html,
   body {
     @apply bg-background text-foreground;
+    font-family: 'SolaimanLipi', 'Noto Sans Bengali', var(--font-roboto-condensed), 'Roboto Condensed', Arial, sans-serif;
+  }
+
+  /* When the page language is set to English */
+  html[lang="en"],
+  html[data-lang="en"],
+  :lang(en),
+  .font-english {
+    font-family: var(--font-roboto-condensed), 'Roboto Condensed', 'SolaimanLipi', 'Noto Sans Bengali', Arial, sans-serif;
+  }
+
+  /* When the page language is set to Bangla */
+  html[lang="bn"],
+  html[data-lang="bn"],
+  :lang(bn),
+  .font-bangla {
+    font-family: 'SolaimanLipi', 'Noto Sans Bengali', var(--font-roboto-condensed), 'Roboto Condensed', Arial, sans-serif;
   }
 }
 
