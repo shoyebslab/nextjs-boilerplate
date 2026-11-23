@@ -56,10 +56,10 @@ export function DepartmentsSection({ departments = [] }: DepartmentsSectionProps
         <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
           <div className="space-y-1.5">
             <span className="text-xs font-bold uppercase tracking-wider text-primary">
-              {t("চিকিৎসা সেবা", "MEDICAL CARE")}
+              {t("বিশেষায়িত সেবা", "Specialized Care")}
             </span>
             <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-foreground">
-              {t("আমাদের বিশেষায়িত বিভাগসমূহ", "Specialized Departments")}
+              {t("আমাদের বিশেষায়িত বিভাগসমূহ", "Our Specialties & Departments")}
             </h2>
           </div>
 
@@ -92,7 +92,7 @@ export function DepartmentsSection({ departments = [] }: DepartmentsSectionProps
                 className="group relative flex flex-col justify-between p-5 rounded-2xl bg-card border border-border/80 shadow-sm hover:shadow-md hover:border-primary/40 hover:-translate-y-1 transition-all duration-300"
               >
                 <div>
-                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-primary mb-4 group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-primary mb-4 group-hover:bg-sky-800 group-hover:text-primary-foreground transition-colors">
                     <Icon className="h-6 w-6" />
                   </div>
 

@@ -61,7 +61,7 @@ export function HeroCarousel({ slides = [], className }: HeroCarouselProps) {
 
   return (
     <section
-      className={cn("relative w-full overflow-hidden bg-slate-900", className)}
+      className={cn("relative w-full overflow-hidden bg-slate-950", className)}
       aria-label="Hospital Highlights Carousel"
     >
       <Carousel
@@ -78,66 +78,99 @@ export function HeroCarousel({ slides = [], className }: HeroCarouselProps) {
             const subtitle = locale === "bn" ? slide.subtitle_bn : slide.subtitle_en;
             const btnText = locale === "bn" ? slide.button_text_bn : slide.button_text_en;
             const isCurrent = current === index;
+            const hasMobileImg = !!slide.mobile_image;
 
             return (
               <CarouselItem
                 key={slide.id || index}
                 className="pl-0 relative min-w-0 flex-[0_0_100%]"
               >
-                <div className="relative w-full h-[380px] sm:h-[480px] md:h-[560px] lg:h-[640px]">
-                  {/* Background Image */}
-                  <Image
-                    src={slide.desktop_image}
-                    alt={title}
-                    fill
-                    priority={index === 0}
-                    className="object-cover object-center transition-transform duration-700 ease-out"
-                    sizes="100vw"
-                  />
+                {/* 
+                  Container aspect ratio:
+                  - Mobile: 15 / 7 (matches 750x350 mobile slide graphics)
+                  - Desktop: 1920 / 650 (~2.95:1, matches 1920x650 desktop graphics)
+                  Prevents digital zoom crop and blurriness.
+                */}
+                <div className="relative w-full aspect-[15/7] md:aspect-[1920/650] max-h-[650px] min-h-[220px]">
+                  {/* Mobile-Optimized Graphic (under 768px) */}
+                  {hasMobileImg && (
+                    <div className="block md:hidden absolute inset-0">
+                      <Image
+                        src={slide.mobile_image!}
+                        alt={title}
+                        fill
+                        priority={index === 0}
+                        quality={95}
+                        className="object-cover object-center"
+                        sizes="(max-width: 768px) 100vw, 750px"
+                      />
+                    </div>
+                  )}
 
-                  {/* Dark Radial / Linear Gradient Overlays */}
+                  {/* Desktop Crisp Panoramic Graphic (768px and above) */}
                   <div
-                    className="absolute inset-0 bg-gradient-to-r from-[#092042]/85 via-[#092042]/50 to-transparent pointer-events-none"
-                    aria-hidden="true"
-                  />
+                    className={cn(
+                      "absolute inset-0",
+                      hasMobileImg ? "hidden md:block" : "block"
+                    )}
+                  >
+                    <Image
+                      src={slide.desktop_image}
+                      alt={title}
+                      fill
+                      priority={index === 0}
+                      quality={95}
+                      className="object-cover object-center"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1400px) 100vw, 1920px"
+                    />
+                  </div>
+
+                  {/* 
+                    Subtle, Authentic Hospital Gradient Overlay
+                    Matches structuredstarline: allows photo clarity while keeping typography readable
+                  */}
                   <div
-                    className="absolute inset-0 bg-gradient-to-t from-[#092042]/80 via-transparent to-black/20 pointer-events-none"
+                    className="absolute inset-0 pointer-events-none"
+                    style={{
+                      background:
+                        "linear-gradient(90deg, rgba(9, 32, 66, 0.65) 0%, rgba(9, 32, 66, 0.25) 45%, rgba(9, 32, 66, 0) 70%), linear-gradient(to top, rgba(9, 32, 66, 0.6) 0%, rgba(9, 32, 66, 0) 35%)",
+                    }}
                     aria-hidden="true"
                   />
 
                   {/* Slide Content Caption */}
-                  <div className="container absolute inset-0 flex flex-col justify-end pb-16 sm:pb-20 lg:pb-24 pointer-events-auto">
+                  <div className="container absolute inset-0 flex flex-col justify-end pb-8 sm:pb-12 md:pb-16 lg:pb-20 pointer-events-auto">
                     <div
                       className={cn(
-                        "max-w-2xl space-y-3 transition-all duration-700 transform",
+                        "max-w-2xl space-y-2 sm:space-y-3 transition-all duration-700 transform",
                         isCurrent
                           ? "opacity-100 translate-y-0"
                           : "opacity-0 translate-y-6"
                       )}
                     >
                       {/* Cyan Accent Indicator */}
-                      <div className="h-1.5 w-12 rounded-full bg-gradient-to-r from-sky-400 to-sky-600 shadow-sm" />
+                      {/* <div className="h-1 sm:h-1.5 w-10 sm:w-12 rounded-full bg-gradient-to-r from-sky-400 to-sky-600 shadow-sm" /> */}
 
-                      <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-white leading-tight drop-shadow-md">
+                      <h2 className="text-lg sm:text-2xl md:text-3xl lg:text-4xl font-extrabold text-white leading-tight drop-shadow-md">
                         {title}
                       </h2>
 
-                      {subtitle && (
-                        <p className="text-xs sm:text-sm md:text-base text-slate-200 line-clamp-2 sm:line-clamp-3 leading-relaxed drop-shadow">
+                      {/* {subtitle && (
+                        <p className="text-[11px] sm:text-xs md:text-sm text-slate-100 line-clamp-2 leading-relaxed drop-shadow">
                           {subtitle}
                         </p>
                       )}
 
                       {slide.button_link && btnText && (
-                        <div className="pt-2">
-                          <Button asChild size="sm" className="gap-2 shadow-lg font-bold">
+                        <div className="pt-1 sm:pt-2">
+                          <Button asChild size="sm" className="gap-2 shadow-lg font-bold text-xs sm:text-sm h-8 sm:h-9">
                             <Link href={slide.button_link}>
                               <span>{btnText}</span>
-                              <ArrowRight className="h-4 w-4" />
+                              <ArrowRight className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                             </Link>
                           </Button>
                         </div>
-                      )}
+                      )} */}
                     </div>
                   </div>
                 </div>
@@ -153,7 +186,7 @@ export function HeroCarousel({ slides = [], className }: HeroCarouselProps) {
               type="button"
               onClick={() => api?.scrollPrev()}
               aria-label="Previous slide"
-              className="absolute left-3 sm:left-6 top-1/2 -translate-y-1/2 z-20 flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full bg-[#0b3c6f]/70 text-white backdrop-blur border border-white/20 shadow-md hover:bg-sky-600 hover:scale-105 transition-all"
+              className="absolute left-3 sm:left-6 top-1/2 -translate-y-1/2 z-20 flex h-9 w-9 sm:h-11 sm:w-11 items-center justify-center rounded-full bg-[#0b3c6f]/70 text-white backdrop-blur border border-white/20 shadow-md hover:bg-sky-600 hover:scale-105 transition-all"
             >
               <ChevronLeft className="h-5 w-5 sm:h-6 sm:w-6" />
             </button>
@@ -162,14 +195,14 @@ export function HeroCarousel({ slides = [], className }: HeroCarouselProps) {
               type="button"
               onClick={() => api?.scrollNext()}
               aria-label="Next slide"
-              className="absolute right-3 sm:right-6 top-1/2 -translate-y-1/2 z-20 flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full bg-[#0b3c6f]/70 text-white backdrop-blur border border-white/20 shadow-md hover:bg-sky-600 hover:scale-105 transition-all"
+              className="absolute right-3 sm:right-6 top-1/2 -translate-y-1/2 z-20 flex h-9 w-9 sm:h-11 sm:w-11 items-center justify-center rounded-full bg-[#0b3c6f]/70 text-white backdrop-blur border border-white/20 shadow-md hover:bg-sky-600 hover:scale-105 transition-all"
             >
               <ChevronRight className="h-5 w-5 sm:h-6 sm:w-6" />
             </button>
 
             {/* Slide Pagination Indicator Pills */}
             <div
-              className="absolute bottom-5 sm:bottom-7 left-0 right-0 z-20 flex justify-center gap-1.5"
+              className="absolute bottom-3 sm:bottom-5 left-0 right-0 z-20 flex justify-center gap-1.5"
               role="tablist"
               aria-label="Carousel pagination"
             >

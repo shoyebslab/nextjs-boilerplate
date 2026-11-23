@@ -64,8 +64,8 @@ export function WelcomeStrip() {
 
         <p className="text-xs sm:text-sm text-muted-foreground max-w-2xl mx-auto leading-relaxed">
           {t(
-            "ফেনীর মহিপালে অভিজ্ঞ প্রফেসর ও কনসালটেন্ট চিকিৎসকদের নিয়মিত সেবা, ২৪ ঘণ্টা জরুরি বিভাগ, বিশ্বমানের আইসিইউ, সিসিইউ, এনআইসিইউ ও সম্পূর্ণ অটোমেটেড ল্যাবরেটরি।",
-            "Located at Mahipal, Feni. Senior medical consultants, round-the-clock emergency care, ICU, CCU, NICU, and fully automated diagnostic facilities."
+            "আধুনিক প্রযুক্তি • অভিজ্ঞ চিকিৎসক • নির্ভরযোগ্য চিকিৎসা সেবা",
+            "Modern technology • Experienced doctors • Reliable medical care"
           )}
         </p>
 

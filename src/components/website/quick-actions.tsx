@@ -35,26 +35,26 @@ export function QuickActions() {
   return (
     <section className="relative z-20 mt-2 sm:mt-3 max-w-6xl mx-auto px-4">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        {cards.map((c, i) => {
-          const Icon = c.icon;
+        {cards.map((card, index) => {
+          const Icon = card.icon;
           return (
             <Link
-              key={i}
-              href={c.href}
-              target={c.isExternal ? "_blank" : undefined}
-              rel={c.isExternal ? "noopener noreferrer" : undefined}
+              key={index}
+              href={card.href}
+              target={card.isExternal ? "_blank" : undefined}
+              rel={card.isExternal ? "noopener noreferrer" : undefined}
               className="group flex items-center gap-4 p-5 rounded-2xl bg-card border border-border/80 shadow-lg hover:shadow-xl hover:border-primary/50 hover:-translate-y-1 transition-all duration-300"
             >
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[#0b3c6f] to-sky-600 text-white shadow-md group-hover:scale-105 transition-transform">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[#0b3c6f] to-sky-600 text-white shadow-md group-hover:from-sky-600 group-hover:to-sky-600 group-hover:scale-105 transition-all">
                 <Icon className="h-6 w-6" />
               </div>
 
               <div className="flex-1 min-w-0">
                 <h3 className="font-bold text-sm text-[#0b3c6f] dark:text-sky-300 group-hover:text-primary transition-colors">
-                  {c.title}
+                  {card.title}
                 </h3>
                 <p className="text-xs text-muted-foreground line-clamp-1 mt-0.5">
-                  {c.desc}
+                  {card.desc}
                 </p>
               </div>
 
